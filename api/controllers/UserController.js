@@ -69,7 +69,7 @@ module.exports = {
     },
 
     destroy: function(req, res, next) {
-    	user.findOne(req.param('id'), function foundUser (err, user){
+    	User.findOne(req.param('id'), function foundUser (err, user){
     		if (err) return next(err);
     		if (!user) return next("User doesn't exist.");
 
