@@ -50,6 +50,11 @@ module.exports = {
 				res.redirect('/user/show/' + user.id);
 			});
 		});
+	},
+
+	destroy: function(req, res, next) {
+		req.session.destroy();
+		res.redirect('/session/new');
 	}
 
 	
