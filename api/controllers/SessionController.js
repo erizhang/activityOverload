@@ -14,7 +14,7 @@ module.exports = {
 
 	create: function(req, res, next) {
 		if (!req.param('email') || !req.param('password')) {
-			var usernamePasswordReqquiredError = [{name: 'usernamePasswordRequired', message: 'You must enter both a username and password.'}];
+			var usernamePasswordRequiredError = [{name: 'usernamePasswordRequired', message: 'You must enter both a username and password.'}];
 
 			req.session.flash = {
 				err: usernamePasswordRequiredError
@@ -23,7 +23,7 @@ module.exports = {
 			return;
 		}
 
-		User.findOneByEmail(req.param('email')).done(function(err, user){
+		User.findOneByEmail(req.param('email'), function foundUser(err, user){
 			if (err) return next(err);
 
 			if (!user) {
@@ -34,7 +34,7 @@ module.exports = {
 				res.redirect('/session/new');
 				return;
 			}
-			bcrypt.compare(req.param('password'), user.encryiptedPassword, function(err, valid){
+			bcrypt.compare(req.param('password'), user.encryptedPassword, function(err, valid){
 				if (err) return next(err);
 
 				if (!valid) {
@@ -47,7 +47,7 @@ module.exports = {
 				}
 				req.session.authenticated = true;
 				req.session.User = user;
-				res.redirect('/user/show' + user.id);
+				res.redirect('/user/show/' + user.id);
 			});
 		});
 	}
