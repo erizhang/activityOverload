@@ -41,6 +41,18 @@ module.exports = {
     }
   },
 
+  beforeValidation: function(values, next) {
+    console.log(values);
+    if (typeof values.admin !== 'undefined') {
+      if (values.admin[0] === 'unchecked') {
+        values.admin = false;
+      } else if (values.admin[1] === 'on') {
+        values.admin = true;
+      }
+    }
+    next();
+  },
+
   beforeCreate: function(values, next){
     if (!values.password || values.password != values.confirmation){
       return next({err:["Password dones't match password confirmation."]});
