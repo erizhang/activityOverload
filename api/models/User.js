@@ -21,6 +21,12 @@ module.exports = {
   		required: true,
   		unique: true
   	},
+
+    amin: {
+      type: 'boolean',
+      defaultsTo: false
+    },
+
   	encryptedPassword: {
   		type: "string"
   	},
