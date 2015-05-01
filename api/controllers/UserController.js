@@ -24,10 +24,15 @@ module.exports = {
             }
             //res.json(user);
             //req.session.flash = {};
+
             req.session.authenticated = true;
             req.session.User = user;
 
-            res.redirect('/user/show/' + user.id);
+            user.online = true;
+            user.save(function(err, user){
+                if (err) return next(err);
+                res.redirect('/user/show/' + user.id);
+            });
         });
     },
 
